@@ -9,6 +9,7 @@ template.innerHTML = `
 
 class CanvasView extends HTMLElement  {
     #canvas;
+    #canvasContext;
 
     constructor() {
         super();
@@ -17,11 +18,24 @@ class CanvasView extends HTMLElement  {
 
         this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-        this.#canvas = this.shadowRoot.querySelector('myCanvas');
+        this.#canvas = this.shadowRoot.querySelector('canvas')
+        this.#canvasContext = this.#canvas.getContext("2d");
+        
+        this.#canvasContext.fillRect(0, 0, 100, 100);
     }
 
     connectedCallback() {
-        
+        let f= function(e) { 
+                this.mousemove(e)
+            }
+        this.#canvas.addEventListener("mousemove", f)
+    }
+
+    mousemove(e) {
+        var rect = e.target.getBoundingClientRect();
+        var x = parseInt((e.clientX - rect.left)); //x position within the element.
+        var y = parseInt((e.clientY - rect.top));  
+        this.#canvasContext.fillRect(x, y, 100, 100);
     }
 }
 
