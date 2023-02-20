@@ -28,25 +28,26 @@ export default class LineDrawView {
     drawOld() {
         const model = this.#controller.getModel()
         const lines = model.getLines()
-        for (let i = 0; i < lines.length; i++) {
-            const line = lines[i]
-            this.#canvasContext.beginPath();
-            this.#canvasContext.moveTo(line.x, line.y); 
-            this.#canvasContext.lineTo(line.toX, line.toY); 
-            this.#canvasContext.strokeStyle = line.color;
-            this.#canvasContext.stroke();
+        for (var key in lines) {
+            const line = lines[key]
+            this.#drawLine(line)
         }
+    }
+
+    #drawLine(line) {
+        this.#canvasContext.beginPath();
+        this.#canvasContext.moveTo(line.x, line.y); 
+        this.#canvasContext.lineTo(line.toX, line.toY); 
+        this.#canvasContext.strokeStyle = line.color;
+        this.#canvasContext.stroke();
     }
 
     mouseMove(x, y) {
         if (this.#isMouseDown) {
-            this.#canvasContext.beginPath();
-            this.#canvasContext.moveTo(this.#lastPos.x, this.#lastPos.y); 
-            this.#canvasContext.lineTo(x, y); 
-            this.#canvasContext.strokeStyle = this.#colorPickingView.getActiveColor();
-            this.#canvasContext.stroke();
             console.log(this.#canvasContext.fillStyle)
-            this.#controller.drawLine(new Line(this.#lastPos.x, this.#lastPos.y, x, y, this.#colorPickingView.getActiveColor()))
+            let line = new Line(this.#lastPos.x, this.#lastPos.y, x, y, this.#colorPickingView.getActiveColor(), Date.now())
+            this.#controller.drawLine(line)
+            this.#drawLine(line)
         }
         this.#lastPos = {x: x, y:y};
     }

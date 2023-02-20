@@ -3,14 +3,14 @@
 export default class LocalModel {
 
     #storagePosition = "Paint::Lines"
-    #lines = []
+    #lines = {}
 
     constructor() {
         let lines = localStorage.getItem(this.#storagePosition)
         if (lines === null)
-            lines = []
+            this.#lines = {}
         else
-            this.#lines= JSON.parse(lines)
+            this.#lines = JSON.parse(lines)
     }
 
     getLines() {
@@ -18,9 +18,8 @@ export default class LocalModel {
     }
 
     addLine(line) {
-
-        
-        this.#lines.push(line)
-        localStorage.setItem(this.#storagePosition, JSON.stringify(this.#lines))
+        this.#lines[line.getHash()] =line
+        const strData = JSON.stringify(this.#lines)
+        localStorage.setItem(this.#storagePosition, strData)
     }
 }
