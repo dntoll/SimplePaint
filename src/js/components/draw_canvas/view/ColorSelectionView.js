@@ -12,7 +12,7 @@ export default class ColorSelectionView {
 
         this.#selectedColor = this.#getColor(w,h)
 
-        for (let x = 0; x < w; x+= 10) {
+        for (let x = 0; x < w; x++) {
             for (let y = 0; y < h; y++) {
                 this.#canvasContext.fillStyle = this.#getColor(x, y);
                 this.#canvasContext.fillRect(x, y, 10, 1);
@@ -21,24 +21,31 @@ export default class ColorSelectionView {
     }
 
     #getColor(x, y) {
-        const numBlues = 8.0
-        const widthOfBlue = this.width / numBlues
-        const redPartOfX = (x % widthOfBlue)
-        const bluePartOfX = parseInt(x / widthOfBlue)
-        const bluePerPart = 255/numBlues
+        const midx = this.width/2
+        const midy = this.height/2
+        const xdiff = (midx - x)/midx
+        const ydiff = (midy - y)/midy
 
-        let r = parseInt(255.0*redPartOfX/widthOfBlue);
-        let g = parseInt(255.0 * y /this.height);
-        let b = parseInt(bluePerPart* bluePartOfX)
+        const diagonal = Math.sqrt(xdiff*xdiff + ydiff * ydiff);
+        const distance = 100 - parseInt(100.0 * diagonal)
 
+        let saturation = 100
+        let lightness = 100
+        if (distance > 200) {
+            saturation = distance - 200
+            lightness = 50
+        } else if (distance > 100) {
+            saturation = distance - 100
+            lightness = 100
+        } else {
+            lightness = distance
+        }
 
-        if (r > 255)
-            r = 255
-        if (g > 255)
-            g = 255
-        if (b > 255)
-            b = 255
-        return "rgb("+ r +", " + g + ", " + b + ")";
+        
+
+        const degree = parseInt(Math.atan2(ydiff, xdiff) * 57.296)
+        
+        return "hsl("+ degree +", "+saturation+"%, "+lightness + "%)";
     }
 
 

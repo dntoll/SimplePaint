@@ -1,1 +1,3 @@
 # SimplePaint
+
+npm run dev

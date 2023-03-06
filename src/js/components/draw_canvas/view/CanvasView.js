@@ -1,5 +1,5 @@
 import LineDrawView from './LineDrawView.js'
-import ColowSelectionView from './ColowSelectionView.js'
+import ColorSelectionView from './ColorSelectionView.js'
 import AppController from '../controller/AppController.js'
 import LocalModel from '../model/LocalModel.js';
 
@@ -7,7 +7,7 @@ import LocalModel from '../model/LocalModel.js';
 const template = document.createElement('template');
 template.innerHTML = `
     <h1>Draw</h1>
-    <canvas id="colorPicker" width="1024" height="64"></canvas>
+    <canvas id="colorPicker" width="256" height="256"></canvas>
     <canvas id="myCanvas" width="1024" height="1024"></canvas>
 `;
 
@@ -32,7 +32,7 @@ class CanvasView extends HTMLElement  {
         this.#pickerCanvas = this.shadowRoot.querySelector('#colorPicker')
         this.#pickerCanvasContext = this.#pickerCanvas.getContext("2d");
         const rect2 = this.#pickerCanvas.getBoundingClientRect()
-        this.#colorSelectionView = new ColowSelectionView(this.#pickerCanvasContext, rect2.right- rect2.left, rect2.bottom-rect2.top)
+        this.#colorSelectionView = new ColorSelectionView(this.#pickerCanvasContext, rect2.right- rect2.left, rect2.bottom-rect2.top)
 
         this.#canvas = this.shadowRoot.querySelector('#myCanvas')
         this.#canvasContext = this.#canvas.getContext("2d");
