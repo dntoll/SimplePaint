@@ -54,8 +54,8 @@ export default class ColorSelectionView {
 
         this.#selectedColor = this.#getColor(x, y)
 
-        this.#canvasContext.fillStyle = this.#getColor(x, y);
-        this.#canvasContext.fillRect(0, 0, 10, 10);
+        this.#canvasContext.fillStyle = this.#selectedColor
+        this.#canvasContext.fillRect(0, 0, 30, 30);
 
         console.log("Selected  at", x, this.#selectedColor)
     }

@@ -1,12 +1,11 @@
 
 export default class Line {
-    constructor(x, y, toX, toY, color, timestamp) {
-        this.x = x
-        this.y = y
-        this.toY = toY
-        this.toX = toX
+    constructor(color, width, timestamp) {
+       
         this.color = color
         this.timestamp = timestamp
+        this.width = width
+        this.segments = {}
     }
 
     getHash() {

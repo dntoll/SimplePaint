@@ -6,11 +6,18 @@ export default class AppController {
     constructor(model) 
     {
         this.#model = model
-        console.log("Hello world")
     }
 
-    drawLine(line) {
-        this.#model.addLine(line)
+    newLine(line) {
+        this.#model.newLine(line)
+    }
+
+    addLineSegment(segment) {
+        this.#model.addLineSegment(segment)
+    }
+
+    undo() {
+        this.#model.removeLastLine();
     }
 
     getModel() {
